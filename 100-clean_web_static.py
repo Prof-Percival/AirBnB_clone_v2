@@ -3,8 +3,9 @@
 import os
 from fabric.api import *
 
-env.hosts = ["100.25.35.245", "18.204.16.41"]
-
+env.hosts = ['100.25.35.245', '18.204.16.41']
+env.user = 'ubuntu'
+env.key_filename = '~/.ssh/school'
 
 def do_clean(number=0):
     """Delete out-of-date archives.
@@ -27,4 +28,4 @@ def do_clean(number=0):
         archives = run("ls -tr").split()
         archives = [a for a in archives if "web_static_" in a]
         [archives.pop() for i in range(number)]
-        [run("rm -rf ./{}".format(a)) for a in archives]
+        [run("sudo rm -rf ./{}".format(a)) for a in archives]
