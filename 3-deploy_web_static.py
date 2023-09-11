@@ -1,22 +1,19 @@
-#!/usr/bin/python3import os.path
-from datetime import datetime
+#!/usr/bin/python3
+import os.path
 from fabric.api import env
 from fabric.api import local
 from fabric.api import put
 from fabric.api import run
+from time import strftime
 
 env.hosts = ['100.25.35.245', '18.204.16.41']
-
+env.user = 'ubuntu'
+env.key_filename = '~/.ssh/school'
 
 def do_pack():
     """Create a tar gzipped archive of the directory web_static."""
-    dt = datetime.utcnow()
-    file = "versions/web_static_{}{}{}{}{}{}.tgz".format(dt.year,
-                                                         dt.month,
-                                                         dt.day,
-                                                         dt.hour,
-                                                         dt.minute,
-                                                         dt.second)
+    
+    file = "versions/web_static_{}.tgz".format(strftime("%Y%m%d%H%M%S"))
     if os.path.isdir("versions") is False:
         if local("mkdir -p versions").failed is True:
             return None
